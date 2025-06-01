@@ -37,6 +37,23 @@
                             <field name="currency_id"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Líneas de Préstamos" name="loan_lines">
+                            <field
+                            name="loan_line"
+                            widget="section_and_note_one2many"
+                            mode="tree,kanban">
+                                <tree
+                                string="Líneas de préstamos"
+                                editable="bottom"
+                                limit="200">
+                                    <field name="name"/>
+                                    <field name="name"/>
+                                </tree>
+
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
