@@ -70,4 +70,10 @@
         </field>
     </record>
 
+    <menuitem id="loan_bank_list_menu"
+            name="Lista de Préstamos"
+            action="action_partner_loan"
+            sequence="20"
+            parent="loan_bank_menu_root"/>
+
 </odoo>

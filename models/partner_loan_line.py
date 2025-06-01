@@ -9,13 +9,15 @@ _logger = logging.getLogger(__name__)
 
 class PartnerLoanLine(models.Model):
     _name = 'partner.loan.line'
-    _description = 'PartnerLoanLine'
+    _description = 'Líneas de préstamos'
 
     name = fields.Char('Name', default='Pago')
     payment_date = fields.Date('Día de Pago')
     amount = fields.Float('Monto')
     loan_id = fields.Many2one(
         comodel_name='partner.loan',
-        'Préstamo',
-        required=True, ondelete='cascade', index=True, copy=False)
-
+        string='Préstamo',
+        required=True, 
+        ondelete='cascade', 
+        index=True, 
+        copy=False)

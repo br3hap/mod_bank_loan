@@ -12,18 +12,18 @@ class PartnerLoan(models.Model):
     _description = 'Préstamos para los contactos'
 
     name = fields.Char(
-        'Nombre',
+        string='Nombre',
         required=True, copy=False, readonly=False,
         default=lambda self: _('New')
         )
     date_loan = fields.Date(
-        'Fecha de préstamo',
+        string='Fecha de préstamo',
         required=True, copy=False,
         default=fields.Datetime.now
         )
-    amount_loan = fields.Float('Monto de préstamo')
-    firts_date_payment = fields.Date('Primera fecha de pago')
-    currency_id = fields.Many2one('res.currency', 'Moneda')
+    amount_loan = fields.Float(string='Monto de préstamo')
+    firts_date_payment = fields.Date(string='Primera fecha de pago')
+    currency_id = fields.Many2one('res.currency', string='Moneda')
     loan_line = fields.One2many(
         comodel_name='partner.loan.line',
         inverse_name='loan_id',
