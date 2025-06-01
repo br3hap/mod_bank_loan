@@ -16,6 +16,10 @@ class PartnerLoan(models.Model):
         required=True, copy=False, readonly=False,
         default=lambda self: _('New')
         )
+    company_id = fields.Many2one(
+        comodel_name='res.company',
+        required=True, index=True,
+        default=lambda self: self.env.company)
     date_loan = fields.Date(
         string='Fecha de préstamo',
         required=True, copy=False,
@@ -41,6 +45,6 @@ class PartnerLoan(models.Model):
                     self, fields.Datetime.to_datetime(vals['date_loan'])
                 ) if 'date_loan' in vals else None
                 vals['name'] = self.env['ir.sequence'].next_by_code(
-                    'sale.order', sequence_date=seq_date) or _("New")
+                    'partner.loan', sequence_date=seq_date) or _("New")
 
         return super().create(vals_list)
