@@ -1,0 +1,3 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_partner_loan_manager,partner_loan_manager,model_partner_loan,,1,1,1,1
+access_partner_loan_line_manager,partner_loan_line_manager,model_partner_loan_line,,1,1,1,1

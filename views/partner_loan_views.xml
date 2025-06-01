@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View partner.loan View Tree -->
+    <record id="view_partner_loan_tree" model="ir.ui.view">
+        <field name="name">view.partner.loan.tree</field>
+        <field name="model">partner.loan</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date_loan"/>
+                <field name="amount_loan"/>
+                <field name="firts_date_payment"/>
+                <field name="currency_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- View partner.loan form -->
+    <record id="view_partner_loan_form" model="ir.ui.view">
+        <field name="name">view.partner.loan.form</field>
+        <field name="model">partner.loan</field>
+        <field name="arch" type="xml">
+            <form string="Partner Loan">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Name..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date_loan"/>
+                            <field name="amount_loan"/>
+                            <field name="firts_date_payment"/>
+                            <field name="currency_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View partner.loan search -->
+    <record id="view_partner_loan_search" model="ir.ui.view">
+        <field name="name">view.partner.loan.search</field>
+        <field name="model">partner.loan</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action partner.loan -->
+    <record id="action_partner_loan" model="ir.actions.act_window">
+        <field name="name">Preśtamo</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partner.loan</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new Partner Loan.
+            </p>
+        </field>
+    </record>
+
+</odoo>
