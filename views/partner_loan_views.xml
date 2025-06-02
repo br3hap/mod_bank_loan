@@ -47,8 +47,10 @@
                                 string="Líneas de préstamos"
                                 editable="bottom"
                                 limit="200">
+                                    <field name="loan_id" invisible="1"/>
                                     <field name="name"/>
                                     <field name="payment_date"/>
+                                    <field name="amount"/>
                                 </tree>
 
                             </field>
