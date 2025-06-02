@@ -6,6 +6,12 @@ from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
+LOAN_STATE = [
+    ('draft', "Borrador"),
+    ('done', "Préstamo"),
+    ('cancel', "Cancelado"),
+]
+
 
 class PartnerLoan(models.Model):
     _name = 'partner.loan'
@@ -44,6 +50,12 @@ class PartnerLoan(models.Model):
     )
     amount_total = fields.Monetary(string="Total", store=True, compute='_compute_amounts', tracking=4)
     note = fields.Html(string="Términos y condiciones")
+    state = fields.Selection(
+        selection=LOAN_STATE,
+        string="Estado",
+        readonly=True, copy=False, index=True,
+        tracking=3,
+        default='draft')
 
     
     @api.depends('loan_line.amount')

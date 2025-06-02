@@ -23,6 +23,9 @@
         <field name="model">partner.loan</field>
         <field name="arch" type="xml">
             <form string="Partner Loan">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
+                </header>
                 <sheet>
                     <div class="oe_title">
                         <label for="name"/>
