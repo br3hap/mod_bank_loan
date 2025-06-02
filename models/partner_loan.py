@@ -59,8 +59,35 @@ class PartnerLoan(models.Model):
     percentage_lines = fields.Float(
         string='Porcentaje pagado',
         compute='_compute_percentage_lines',
-        store=True,
+        # store=True,
         help="Porcentaje del total que representan las líneas del préstamo")
+    interest_rate = fields.Float(
+        string='Porcentaje de interés (%)',
+        help='Porcentaje de interés aplicado al monto del préstamo')
+    interest_amount = fields.Monetary(
+        string='Monto del interés',
+        compute='_compute_interest',
+        # store=True,
+        currency_field='currency_id',
+        help='Interés calculado sobre el monto del préstamo')
+    total_with_interest = fields.Monetary(
+        string='Total con interés',
+        compute='_compute_interest',
+        # store=True,
+        currency_field='currency_id',
+        help='Suma del monto del préstamo y el interés calculado')
+    apply_interest = fields.Boolean(string='Aplicar Intereses', default=False)
+
+    
+    @api.depends('amount_loan', 'interest_rate')
+    def _compute_interest(self):
+        for record in self:
+            if record.amount_loan and record.interest_rate:
+                record.interest_amount = (record.amount_loan * record.interest_rate) / 100
+                record.total_with_interest = record.amount_loan + record.interest_amount
+            else:
+                record.interest_amount = 0.0
+                record.total_with_interest = record.amount_loan or 0.0
 
     
     def validate_loan(self):
@@ -77,11 +104,14 @@ class PartnerLoan(models.Model):
         for record in self:
             record.state = 'draft'
 
-    @api.depends('loan_line.amount', 'amount_total', 'amount_loan')
+    @api.depends('loan_line.amount', 'amount_total', 'amount_loan', 'interest_rate', 'apply_interest')
     def _compute_percentage_lines(self):
         for record in self:
             if record.amount_loan:  # evita división por cero
-                record.percentage_lines = (record.amount_total / record.amount_loan) * 100
+                if record.apply_interest:
+                    record.percentage_lines = (record.amount_total / record.total_with_interest) * 100
+                else:
+                    record.percentage_lines = (record.amount_total / record.amount_loan) * 100
             else:
                 record.percentage_lines = 0.0
 
