@@ -40,6 +40,7 @@
                             <field name="amount_loan"/>
                             <field name="firts_date_payment"/>
                             <field name="currency_id"/>
+                            <field name="percentage_lines" widget="progressbar" readonly="1"/>
                         </group>
                     </group>
                     <notebook>

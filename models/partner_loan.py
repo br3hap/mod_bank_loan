@@ -56,6 +56,24 @@ class PartnerLoan(models.Model):
         readonly=True, copy=False, index=True,
         tracking=3,
         default='draft')
+    percentage_lines = fields.Float(
+        string='Porcentaje pagado',
+        compute='_compute_percentage_lines',
+        store=True,
+        help="Porcentaje del total que representan las líneas del préstamo")
+
+
+    @api.depends('loan_line.amount', 'amount_total', 'amount_loan')
+    def _compute_percentage_lines(self):
+        for record in self:
+            if record.amount_loan:  # evita división por cero
+                record.percentage_lines = (record.amount_total / record.amount_loan) * 100
+            else:
+                record.percentage_lines = 0.0
+        # for record in self:
+        #     record.percentage_lines = (record.amount_total / record.amount_loan) * 100
+    
+    
 
     
     @api.depends('loan_line.amount')
