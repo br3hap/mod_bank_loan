@@ -12,7 +12,7 @@ class PartnerLoanLine(models.Model):
     _description = 'Líneas de préstamos'
 
     name = fields.Char('Name', default='Pago')
-    payment_date = fields.Date('Día de Pago')
+    payment_date = fields.Date('Día de Pago', default=fields.Datetime.now, required=True, copy=False)
     amount = fields.Float('Monto')
     loan_id = fields.Many2one(
         comodel_name='partner.loan',

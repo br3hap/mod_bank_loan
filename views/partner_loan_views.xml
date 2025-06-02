@@ -43,14 +43,23 @@
                             name="loan_line"
                             widget="section_and_note_one2many"
                             mode="tree,kanban">
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="loan_id" invisible="1"/>
+                                            <field name="name"/>
+                                            <field name="payment_date"/>
+                                            <field name="amount"/>
+                                        </group>
+                                    </group>
+                                </form>
                                 <tree
-                                string="Líneas de préstamos"
-                                editable="bottom"
-                                limit="200">
-                                    <field name="loan_id" invisible="1"/>
-                                    <field name="name"/>
-                                    <field name="payment_date"/>
-                                    <field name="amount"/>
+                                    string="Líneas de préstamos"
+                                    editable="bottom"
+                                    limit="200">
+                                        <field name="name"/>
+                                        <field name="payment_date"/>
+                                        <field name="amount"/>
                                 </tree>
 
                             </field>
