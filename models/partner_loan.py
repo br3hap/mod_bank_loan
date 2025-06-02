@@ -43,6 +43,7 @@ class PartnerLoan(models.Model):
         auto_join=True
     )
     amount_total = fields.Monetary(string="Total", store=True, compute='_compute_amounts', tracking=4)
+    note = fields.Html(string="Términos y condiciones")
 
     
     @api.depends('loan_line.amount')
