@@ -9,6 +9,7 @@ _logger = logging.getLogger(__name__)
 
 class PartnerLoan(models.Model):
     _name = 'partner.loan'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Préstamos para los contactos'
 
     name = fields.Char(
@@ -16,6 +17,12 @@ class PartnerLoan(models.Model):
         required=True, copy=False, readonly=False,
         default=lambda self: _('New')
         )
+    partner_id = fields.Many2one(
+        comodel_name='res.partner',
+        string="Cliente",
+        required=True, change_default=True, index=True,
+        tracking=1,
+        domain="[('company_id', 'in', (False, company_id))]")
     company_id = fields.Many2one(
         comodel_name='res.company',
         required=True, index=True,
@@ -35,6 +42,13 @@ class PartnerLoan(models.Model):
         copy=False,
         auto_join=True
     )
+    amount_total = fields.Monetary(string="Total", store=True, compute='_compute_amounts', tracking=4)
+
+    
+    @api.depends('loan_line.amount')
+    def _compute_amounts(self):
+        for loan in self:
+            loan.amount_total = sum(loan.loan_line.mapped('amount'))
 
     
     @api.model_create_multi

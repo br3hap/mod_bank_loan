@@ -6,7 +6,7 @@
     'author': 'Breithner Aquituari',
     'website': '',
     'category': '',
-    'depends': ['base', ],
+    'depends': ['base', 'mail',],
     "data": [
         "security/ir.model.access.csv",
         "data/ir_sequence_data.xml",

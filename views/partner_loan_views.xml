@@ -61,11 +61,22 @@
                                         <field name="payment_date"/>
                                         <field name="amount"/>
                                 </tree>
-
                             </field>
+
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group class="oe_subtotal_footer" colspan="2" name="loan_total">
+                                    <field name="amount_total" nolabel="1" colspan="2" readonly="1"/>
+                                </group>
+                                <div class="clearfix"/>
+                            </group>
                         </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>

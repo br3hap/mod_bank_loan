@@ -21,3 +21,4 @@ class PartnerLoanLine(models.Model):
         ondelete='cascade', 
         index=True, 
         copy=False)
+        
