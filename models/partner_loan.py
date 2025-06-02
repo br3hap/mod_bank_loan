@@ -21,8 +21,8 @@ class PartnerLoan(models.Model):
         comodel_name='res.partner',
         string="Cliente",
         required=True, change_default=True, index=True,
-        tracking=1,
-        domain="[('company_id', 'in', (False, company_id))]")
+        tracking=1
+        )
     company_id = fields.Many2one(
         comodel_name='res.company',
         required=True, index=True,
