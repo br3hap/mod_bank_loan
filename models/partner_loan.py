@@ -62,6 +62,20 @@ class PartnerLoan(models.Model):
         store=True,
         help="Porcentaje del total que representan las líneas del préstamo")
 
+    
+    def validate_loan(self):
+        for record in self:
+            record.state = 'done'
+
+
+    def cancel_loan(self):
+        for record in self:
+            record.state = 'cancel'
+
+
+    def draft_loan(self):
+        for record in self:
+            record.state = 'draft'
 
     @api.depends('loan_line.amount', 'amount_total', 'amount_loan')
     def _compute_percentage_lines(self):
@@ -70,10 +84,6 @@ class PartnerLoan(models.Model):
                 record.percentage_lines = (record.amount_total / record.amount_loan) * 100
             else:
                 record.percentage_lines = 0.0
-        # for record in self:
-        #     record.percentage_lines = (record.amount_total / record.amount_loan) * 100
-    
-    
 
     
     @api.depends('loan_line.amount')

@@ -12,7 +12,7 @@ class PartnerLoanLine(models.Model):
     _order = 'loan_id, sequence, id'
     _description = 'Líneas de préstamos'
 
-    name = fields.Char('Name', default='Pago')
+    name = fields.Char('Descripción', default='Pago')
     sequence = fields.Integer(string="Sequence", default=10)
     payment_date = fields.Date('Día de Pago', default=fields.Datetime.now, required=True, copy=False)
     amount = fields.Float('Monto')
