@@ -6,10 +6,95 @@
           <div class="container mt-5">
             <h1>Formulario de Préstamo</h1>
             <form action="/loan/submit" method="POST">
-              
+              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+              <div class="s_website_form_rows row s_col_no_bgcolor">
+
+
+                <!-- Cliente -->
+                <div class="mb-3">
+                  <label for="partner_id" class="form-label">Cliente</label>
+                  <select name="partner_id" id="partner_id" class="form-control" required="">
+                    <option value="">Seleccionar cliente</option>
+                    <t t-foreach="partners" t-as="partner">
+                      <option t-att-value="partner.id">
+                        <t t-esc="partner.name"/>
+                      </option>
+                    </t>
+                  </select>
+                </div>
+
+                <!-- Fecha del préstamo -->
+                <div class="mb-3">
+                  <label for="date_loan" class="form-label">Fecha del préstamo</label>
+                  <input type="date" id="date_loan" name="date_loan" class="form-control" required=""/>
+                </div>
+
+                <!-- Monto -->
+                <div class="mb-3">
+                  <label for="amount_loan" class="form-label">Monto del préstamo</label>
+                  <input type="number" step="0.01" id="amount_loan" name="amount_loan" class="form-control" required=""/>
+                </div>
+
+                <!-- Primera fecha de pago -->
+                <div class="mb-3">
+                  <label for="firts_date_payment" class="form-label">Primera fecha de pago</label>
+                  <input type="date" id="firts_date_payment" name="firts_date_payment" class="form-control"/>
+                </div>
+
+                <!-- Moneda -->
+                <div class="mb-3">
+                  <label for="currency_id" class="form-label">Moneda</label>
+                  <select name="currency_id" id="currency_id" class="form-control">
+                    <option value="">Seleccionar moneda</option>
+                    <t t-foreach="currencies" t-as="currency">
+                      <option t-att-value="currency.id">
+                        <t t-esc="currency.name"/>
+                      </option>
+                    </t>
+                  </select>
+                </div>
+
+                <!-- Porcentaje de interés -->
+                <div class="mb-3">
+                  <label for="interest_rate" class="form-label">Porcentaje de interés (%)</label>
+                  <input type="number" step="0.01" id="interest_rate" name="interest_rate" class="form-control"/>
+                </div>
+
+                <!-- Aplicar interés -->
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" id="apply_interest" name="apply_interest"/>
+                  <label class="form-check-label" for="apply_interest">Aplicar Interés</label>
+                </div>
+
+                <!-- Términos y condiciones -->
+                <div class="mb-3">
+                  <label for="note" class="form-label">Términos y condiciones</label>
+                  <textarea class="form-control" id="note" name="note" rows="4"></textarea>
+                </div>
+
+                <!-- Botón enviar -->
+                <div class="mt-4">
+                  <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+                </div>
+
+
+
+              </div>
             </form>
           </div>
         </t>
       </template>
+
+
+      <template id="partner_loan_thank_you" name="Gracias por enviar">
+        <t t-call="website.layout">
+          <div class="container mt-5">
+            <h1>¡Gracias por tu solicitud!</h1>
+            <p>Tu formulario ha sido recibido. Nos pondremos en contacto pronto.</p>
+          </div>
+        </t>
+      </template>
+
+
   </data>
 </odoo>
