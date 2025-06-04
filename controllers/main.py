@@ -4,6 +4,15 @@ from odoo.http import request
 
 class Main(http.Controller):
 
+    @http.route('/loan/list', type='http', auth='public', website=True)
+    def loan_form_list(self, **kw):
+        loans = request.env['partner.loan'].sudo().search([])
+
+        return request.render('mod_bank_loan.partner_loan_list', {
+            'loans': loans,
+        })
+
+
     @http.route('/loan/new', type='http', auth='public', website=True)
     def loan_form(self, **kw):
         partners = request.env['res.partner'].sudo().search([])
