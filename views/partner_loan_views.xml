@@ -24,10 +24,11 @@
         <field name="arch" type="xml">
             <form string="Partner Loan">
                 <header>
-                    <button name="draft_loan" type="object" data-hotkey="shift+g" string="Borrador" class="oe_highlight" invisible="state == 'draft'"/>
-                    <button name="validate_loan" type="object" data-hotkey="shift+g" string="Validar" class="oe_highlight"/>
-                    <button name="cancel_loan" type="object" data-hotkey="shift+g" string="Cancelar" class="oe_highlight"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
+                    <button name="draft_loan" type="object" data-hotkey="shift+d" string="Borrador" class="oe_highlight" invisible="state == 'draft'"/>
+                    <button name="validate_loan" type="object" data-hotkey="shift+v" string="Aprobado" class="oe_highlight"/>
+                    <button name="payd_loan" type="object" data-hotkey="shift+p" string="Pagado" class="oe_highlight"/>
+                    <button name="cancel_loan" type="object" data-hotkey="shift+c" string="Cancelar" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approved,paid,cancelled"/>
                 </header>
                 <sheet>
                     <div class="oe_title">

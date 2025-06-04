@@ -7,9 +7,10 @@ from odoo.exceptions import UserError, ValidationError
 _logger = logging.getLogger(__name__)
 
 LOAN_STATE = [
-    ('draft', "Borrador"),
-    ('done', "Préstamo"),
-    ('cancel', "Cancelado"),
+    ('draft', 'Borrador'),
+    ('approved', 'Aprobado'),
+    ('paid', 'Pagado'),
+    ('cancelled', 'Cancelado')
 ]
 
 
@@ -92,12 +93,16 @@ class PartnerLoan(models.Model):
     
     def validate_loan(self):
         for record in self:
-            record.state = 'done'
+            record.state = 'approved'
+
+    def payd_loan(self):
+        for record in self:
+            record.state = 'paid'
 
 
     def cancel_loan(self):
         for record in self:
-            record.state = 'cancel'
+            record.state = 'cancelled'
 
 
     def draft_loan(self):
@@ -119,7 +124,18 @@ class PartnerLoan(models.Model):
     @api.depends('loan_line.amount')
     def _compute_amounts(self):
         for loan in self:
-            loan.amount_total = sum(loan.loan_line.mapped('amount'))
+            total = sum(loan.loan_line.mapped('amount'))
+            # Determinar el máximo permitido
+            max_allowed = loan.total_with_interest if loan.apply_interest else loan.amount_loan
+
+            # Validación: no se puede pasar del monto permitido
+            if total > max_allowed:
+                raise ValidationError(
+                    'La suma de los pagos (%.2f) no puede ser mayor al monto del préstamo (%.2f).' %
+                    (total, max_allowed)
+                )
+
+            loan.amount_total = total
 
     
     @api.model_create_multi

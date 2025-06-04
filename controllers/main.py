@@ -47,3 +47,27 @@ class Main(http.Controller):
     @http.route(['/loan/thank-you'], type='http', auth='public', website=True)
     def loan_thank_you(self, **kwargs):
         return request.render('mod_bank_loan.partner_loan_thank_you')
+
+
+    @http.route('/loan/pay/<int:loan_id>', type='http', auth='public', website=True)
+    def loan_payment_form(self, loan_id, **kw):
+        loan = request.env['partner.loan'].sudo().browse(loan_id)
+        if not loan.exists():
+            return request.not_found()
+        return request.render('mod_bank_loan.partner_loan_payment_form', {
+            'loan':loan
+        })
+
+
+    @http.route('/loan/pay/submit', type='http', auth='public', website=True, csrf=False)
+    def loan_payment_submit(self, **post):
+        loan_id = int(post.get('loan_id'))
+        amount = float(post.get('amount', 0))
+        
+        loan = request.env['partner.loan'].sudo().browse(loan_id)
+        if loan.exists() and amount > 0:
+            request.env['partner.loan.line'].sudo().create({
+                'loan_id': loan_id,
+                'amount': amount,
+            })
+        return request.redirect('/loan/list')
