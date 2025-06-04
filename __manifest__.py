@@ -6,14 +6,15 @@
     'author': 'Breithner Aquituari',
     'website': '',
     'category': '',
-    'depends': ['base', 'mail',],
+    'depends': ['base', 'mail'],
     "data": [
         "data/ir_sequence_data.xml",
         "security/ir.model.access.csv",
         "views/menu_views.xml",
         "views/partner_loan_line_views.xml",
         "views/partner_loan_views.xml",
-        "views/res_partner_views.xml"
+        "views/res_partner_views.xml",
+        "views/templates.xml"
     ],
     
     'application': True,
